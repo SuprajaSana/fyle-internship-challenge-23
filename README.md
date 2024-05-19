@@ -41,3 +41,12 @@ Run `ng serve` for a dev server. Navigate to http://localhost:4200/. The app wil
 
 Visit the [Angular Documentation](https://angular.io/guide/styleguide) to learn more.
 Styling is to be strictly done with [Tailwind](https://tailwindcss.com/docs/installation).
+
+## Changes in app component
+1. Created an form to input the name of the user.
+2. Based on the input we will get the respected repos of the user. If the user valid info will be shown if not we will get zero state of user
+3. Pagination is included to limit the repos.
+4. On click repos we can redirect to repos.
+
+## Tests
+Unit Tests has be performed on app component and app service using Jasmine

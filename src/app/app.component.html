@@ -1,5 +1,138 @@
-<div class="grid h-screen place-items-center">
-  <div class="font-bold text-3xl">
-    Fyle Internship Challenge
+<title>{{title}}</title>
+<div *ngIf="!loadContent" class="w-96 md:w-full grid h-screen place-items-center text-xl">
+  <form [formGroup]="myform" (ngSubmit)="onSubmit()">
+    <input
+      type="text"
+      #box
+      placeholder="Enter Username"
+      formControlName="name"
+      class="w-32 md:w-80 pl-1 md:pl-6 py-2 border-2 text-base shadow-lg font-semibold bg-white"
+      required
+    />
+    <button
+      class="w-auto bg-slate-100 px-10 py-2 ml-2 shadow-lg border-2 border-slate-100 rounded-md font-semibold"
+      type="submit"
+    >
+      Search
+    </button>
+  </form>
+</div>
+<div class="flex flex-row justify-center mt-20 text-xl" *ngIf="loadContent">
+  <form [formGroup]="myform" (ngSubmit)="onSubmit()">
+    <input
+      type="text"
+      #box
+      placeholder="Enter Username"
+      formControlName="name"
+      class="w-32 md:w-80 pl-1 md:pl-6 border-2 py-2 text-base shadow-lg font-semibold bg-white"
+      required
+    />
+    <button
+      class="w-auto bg-slate-100 ml-2 px-10 py-2 shadow-lg border-2 border-slate-100 rounded-md font-semibold"
+      type="submit"
+    >
+      Search
+    </button>
+  </form>
+</div>
+<div *ngIf="displayObj">
+  <div class="w-96 md:w-full flex flex-row justify-center mt-10 text-xl mb-10">
+    <div class="w-auto md:w-3/5 md:h-4/5 mt-32 bg-white" *ngIf='isLoading'>
+      <div class="flex justify-center items-center text-base font-semibold">Loading...</div>
+    </div>
+    <div class="w-auto md:w-3/5 md:h-4/5 border-2 border-black bg-white" *ngIf="!isLoading">
+      <div class="flex flex-col space-y-10 m-8">
+        <div class="flex flex-row justify-start space-x-12">
+          <div class="fles flex-col">
+            <img
+              src="{{ valuesArr[3] }}"
+              class="bg-slate-300 rounded-full mb-6 ml-6"
+              alt="{{ valuesArr[18] }}"
+              width="175"
+              height="175"
+            />
+            <a
+              href="{{ valuesArr[6] }}"
+              class="text-sm font-bold flex flex-row items-center justify-center"
+              ><svg
+                class="h-4 w-4 font-bold text-black mr-2 mt-1"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path
+                  d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"
+                />
+                <line x1="8" y1="12" x2="16" y2="12" /></svg>{{ valuesArr[6] }}</a
+            >
+          </div>
+          <div class="flex flex-col space-y-2 font-bold mt-2">
+            <div class="text-2xl">{{ valuesArr[18] }}</div>
+            <div class="text-sm">{{ valuesArr[24] }}</div>
+            <div class="text-sm flex flex-row">
+              <svg
+                class="h-4 w-4 text-black mt-1 mr-2"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path
+                  d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"
+                  fill="black"
+                />
+                <circle cx="12" cy="10" r="3" fill="white" /></svg>{{ valuesArr[21] }}
+            </div>
+            <a class="text-sm" href="{{ valuesArr[20] }}"
+              >{{ keysArr[20] }}: {{ valuesArr[20] }}</a
+            >
+          </div>
+        </div>
+        <div class="w-auto md:w-full grid grid-cols-2 gap-16">
+          <ul
+            *ngFor="
+              let i of reposArr
+                | paginate : { itemsPerPage: limit, currentPage: p }
+            "
+            class="flex flex-col space-y-6 border-2 border-black"
+          >
+            <div class="m-3">
+              <li class="text-xl text-sky-500 font-bold">
+                <a href="{{ i.html_url }}">{{ i.name }}</a>
+              </li>
+              <li class="text-sm font-semibold mt-4">{{ i.description }}</li>
+              <li class="grid grid-cols-5 gap-1 mt-4">
+                <ul
+                  *ngFor="let j of i.topics"
+                  class="bg-sky-600 text-white text-sm font-bold rounded-sm text-center pb-1"
+                >
+                  <li>{{ j }}</li>
+                </ul>
+              </li>
+            </div>
+          </ul>
+        </div>
+        <div class="flex flex-row justify-between text-sm font-semibold">
+          <label
+            >Show
+            <select [(ngModel)]="limit">
+              <option value="10">10</option>
+              <option value="20">20</option>
+              <option value="30">30</option>
+              <option value="50">50</option>
+              <option value="100">100</option></select
+            >Entries
+          </label>
+          <pagination-controls (pageChange)="p = $event"></pagination-controls>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
+
+
